@@ -141,17 +141,17 @@ function init()
 
     params:add {
         type = "control",
-        id = "density",
-        name = "grain density",
-        controlspec = controlspec.new(20, 1000, "lin", 10, 100, "ms"), -- minval, maxval, warp, step, default, units
+        id = "mass",
+        name = "grain mass",
+        controlspec = controlspec.new(0, 1, "lin", 0.01, 0.2, "g"),
         action = function(val)
-            billboard:display_param("density", val .. " ms")
+            billboard:display_param("mass", val .. " g")
             arc_params:redraw()
         end
     }
 
     arc_params:register("wind", 0.25)
-    arc_params:register("density", 1)
+    arc_params:register("mass", 0.01)
     arc_params:register("cloud_lower_bound", 1)
     arc_params:register("cloud_upper_bound", 1)
     arc_params:register("spawn_amount", 1)

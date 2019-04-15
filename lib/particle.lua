@@ -49,7 +49,11 @@ function Particle:reset(x, y)
 end
 
 function Particle:apply_force(force)
-    self.acceleration_ = self.acceleration_ + force
+    local m = params:get("mass")
+    local fx = force:getX() * (1 - m)
+    local fy = force:getY() * (1 - m)
+    local adj_force = v2d.Vector2D(fx, fy)
+    self.acceleration_ = self.acceleration_ + adj_force
 end
 
 function Particle:update()
@@ -68,7 +72,11 @@ function Particle:draw()
     local x = math.ceil(self:x())
     local y = math.ceil(self:y())
     screen.level(math.ceil(self.age_))
+    local m = math.ceil(10 * params:get("mass"))
     screen.pixel(x, y)
+    for i = 1, m do
+        screen.pixel(x + i, y)
+    end
     screen.fill()
 end
 
@@ -79,9 +87,11 @@ function Particle:emit()
     local reduce = 0.5
     engine.amp(nmag * reduce)
 
-    local dur = params:get("density")
-    local high = util.clamp(dur + 100, 20, 1000)
-    local low = util.clamp(dur - 100, 20, 1000)
+    local mass = params:get("mass")
+    local dur = math.ceil(util.linlin(0, 1, 20, 500, mass))
+
+    local high = dur + 100
+    local low = dur
     engine.dur(math.random(low, high))
 
     local pan = util.linlin(0, 64, -1, 1, self:y())
