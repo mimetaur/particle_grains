@@ -12,7 +12,7 @@ local PlayHead = include("particle_grains/lib/playhead")
 local play_head = {}
 
 local Billboard = include("billboard/lib/billboard")
-local billboard = {}
+local billboard = Billboard.new()
 
 local clock = {}
 local redraw_clock = {}
@@ -53,7 +53,6 @@ function init()
     math.randomseed(os.time())
 
     play_head = PlayHead.new()
-    billboard = Billboard.new()
     pp = ParticlePool.new()
 
     clock = metro.init(update, 0.01, -1)
