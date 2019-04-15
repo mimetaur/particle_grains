@@ -3,29 +3,15 @@
 
 engine.name = "SimpleGrain"
 
-local RELOAD_LIBS = true
+local v2d = include("particle_grains/lib/vectorial2")
 
-local v2d = require "grains/lib/vectorial2"
-
-local libs = {
-    arc_params = "arc_params/lib/arc_params",
-    particle_path = "grains/lib/particle",
-    pp_path = "grains/lib/particle_pool",
-    playhead_path = "grains/lib/playhead",
-    bb_path = "grains/lib/billboard"
-}
-if RELOAD_LIBS then
-    local reload_libraries = require "grains/lib/reload_libraries"
-    reload_libraries.with_table(libs)
-end
-
-local ParticlePool = require(libs.pp_path)
+local ParticlePool = include("particle_grains/lib/particle_pool")
 local pp = {}
 
-local PlayHead = require(libs.playhead_path)
+local PlayHead = include("particle_grains/lib/playhead")
 local play_head = {}
 
-local Billboard = require(libs.bb_path)
+local Billboard = include("billboard/lib/billboard")
 local billboard = {}
 
 local clock = {}
@@ -40,7 +26,7 @@ local upper_bound = 64
 
 -- arc
 local ar = arc.connect()
-local ArcParams = require(libs.arc_params)
+local ArcParams = include("arc_params/lib/arc_params")
 local arc_params = ArcParams.new(ar, false)
 
 function ar.delta(n, delta)

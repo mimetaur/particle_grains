@@ -4,19 +4,9 @@ local ParticlePool = {}
 ParticlePool.__index = ParticlePool
 
 local FREE_PARTICLES = 100
-local RELOAD_LIBS = true
 
-local v2d = require "grains/lib/vectorial2"
-
-local libs = {
-    particle_path = "grains/lib/particle"
-}
-local Particle = require(libs.particle_path)
-
-if RELOAD_LIBS then
-    local reload_libraries = require "grains/lib/reload_libraries"
-    reload_libraries.with_table(libs)
-end
+local v2d = include("particle_grains/lib/vectorial2")
+local Particle = include("particle_grains/lib/particle")
 
 function ParticlePool.new(num_particles)
     math.randomseed(os.time())

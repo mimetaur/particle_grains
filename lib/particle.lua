@@ -3,7 +3,7 @@
 local Particle = {}
 Particle.__index = Particle
 
-local v2d = require "grains/lib/vectorial2"
+local v2d = include("particle_grains/lib/vectorial2")
 
 local function contains_point(x1, y1, x2, y2, x, y)
     local contains = false
