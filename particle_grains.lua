@@ -25,12 +25,12 @@ local lower_bound = 0
 local upper_bound = 64
 
 -- arc
-local ar = arc.connect()
-local ArcParams = include("arc_params/lib/arc_params")
-local arc_params = ArcParams.new(ar, false)
+local my_arc = arc.connect()
+local Arcify = include("arcify/lib/arcify")
+local arcify = Arcify.new(my_arc, false)
 
-function ar.delta(n, delta)
-    arc_params:update(n, delta)
+function my_arc.delta(n, delta)
+    arcify:update(n, delta)
 end
 
 local function spawn_particles()
@@ -74,7 +74,7 @@ function init()
             billboard:display_param("cloud top", val)
             lower_bound = val
             pp:set_cloud_top(val)
-            arc_params:redraw()
+            arcify:redraw()
         end
     }
 
@@ -89,7 +89,7 @@ function init()
 
             upper_bound = val
             pp:set_cloud_bottom(val)
-            arc_params:redraw()
+            arcify:redraw()
         end
     }
 
@@ -107,7 +107,7 @@ function init()
             end
             pp:set_wind(wind)
             billboard:display_param("wind", val)
-            arc_params:redraw()
+            arcify:redraw()
         end
     }
 
@@ -119,7 +119,7 @@ function init()
         action = function(val_in_ms)
             spawn_rate = math.ceil(val_in_ms / 10)
             billboard:display_param("spawn rate", val_in_ms)
-            arc_params:redraw()
+            arcify:redraw()
         end
     }
 
@@ -135,7 +135,7 @@ function init()
             local v = math.ceil(val)
             billboard:display_param("spawn amount", v)
             spawn_amount = v
-            arc_params:redraw()
+            arcify:redraw()
         end
     }
 
@@ -146,24 +146,24 @@ function init()
         controlspec = controlspec.new(0, 1, "lin", 0.01, 0.2, "g"),
         action = function(val)
             billboard:display_param("mass", val .. " g")
-            arc_params:redraw()
+            arcify:redraw()
         end
     }
 
-    arc_params:register("wind", 0.25)
-    arc_params:register("mass", 0.01)
-    arc_params:register("cloud_lower_bound", 1)
-    arc_params:register("cloud_upper_bound", 1)
-    arc_params:register("spawn_amount", 1)
-    arc_params:register("spawn_rate", 10)
+    arcify:register("wind", 0.25)
+    arcify:register("mass", 0.01)
+    arcify:register("cloud_lower_bound", 1)
+    arcify:register("cloud_upper_bound", 1)
+    arcify:register("spawn_amount", 1)
+    arcify:register("spawn_rate", 10)
 
-    arc_params:add_arc_params()
+    arcify:add_arc_params()
 
     params:default()
 
     spawn_particles()
 
-    arc_params:redraw()
+    arcify:redraw()
 end
 
 function redraw()
