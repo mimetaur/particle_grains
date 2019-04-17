@@ -25,13 +25,9 @@ local lower_bound = 0
 local upper_bound = 64
 
 -- arc
-local my_arc = arc.connect()
 local Arcify = include("arcify/lib/arcify")
+local my_arc = arc.connect()
 local arcify = Arcify.new(my_arc, false)
-
-function my_arc.delta(n, delta)
-    arcify:update(n, delta)
-end
 
 local function spawn_particles()
     for i = 1, spawn_amount do
@@ -157,7 +153,7 @@ function init()
     arcify:register("spawn_amount", 1)
     arcify:register("spawn_rate", 10)
 
-    arcify:add_arc_params()
+    arcify:add_params()
 
     params:default()
 
